@@ -9,6 +9,6 @@ using (var _context = new AppDbContext())
 
     products.ForEach(p =>
     {
-        Console.WriteLine(p.Name + " - - - Fiyat : " + p.Price);
+        Console.WriteLine(p.Name + " - - - Fiyat : " + p.Price + " - - - Stok : " + p.Stock);
     });
 }
