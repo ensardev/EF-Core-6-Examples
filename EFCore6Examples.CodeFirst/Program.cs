@@ -7,10 +7,58 @@ Initializer.Build();
 
 using (var _context = new AppDbContext())
 {
+    #region Add Product
+    //var newProduct = new Product
+    //{
+    //    Name= "Clean Code",
+    //    Price = 179,
+    //    Stock = 77,
+    //    Barcode = "010101"
+    //};
+    //Console.WriteLine($"First State : {_context.Entry(newProduct).State}");
+
+    //await _context.AddAsync(newProduct);    
+    //Console.WriteLine($"Second State : {_context.Entry(newProduct).State}");
+
+    ////We can also use "_context.Entry(newProduct).State = EntityState.Added; of "await _context.AddAsync(newProduct); command."
+
+    //await _context.SaveChangesAsync();
+    //Console.WriteLine($"Last State : {_context.Entry(newProduct).State}");
+    #endregion
+
+    #region Update Product
+    //var product = await _context.Products.FirstOrDefaultAsync();
+    //Console.WriteLine($"First State : {_context.Entry(product).State}");
+
+    //product.Stock = 88;
+    //Console.WriteLine($"Second State : {_context.Entry(product).State}");
+
+    //await _context.SaveChangesAsync();
+    //Console.WriteLine($"Last State : {_context.Entry(product).State}");
+
+    ////If this data isn't tracked by EFCore we must use the "Update" method.
+    ///Like this : "_context.Update(new Product() { Id = 3, Name = "Dava", Price = 99, Stock = 111 });"
+    #endregion
+
+    #region Delete Product
+    //var product = await _context.Products.FirstOrDefaultAsync();
+    //Console.WriteLine($"First State : {_context.Entry(product).State}");
+
+    //_context.Remove(product);
+    //Console.WriteLine($"Second State : {_context.Entry(product).State}");
+
+    //await _context.SaveChangesAsync();
+    //Console.WriteLine($"Last State : {_context.Entry(product).State}");
+    #endregion
+
+    #region List Products
     var products = await _context.Products.ToListAsync();
 
     products.ForEach(p =>
     {
-        Console.WriteLine($"Ürün : {p.Name} - Fiyat : {p.Price} - Stok : {p.Stock}");
+        var state = _context.Entry(p).State;
+
+        Console.WriteLine($"Ürün : {p.Name} - Fiyat : {p.Price} - Stok : {p.Stock} - State : {state}");
     });
+    #endregion
 }
