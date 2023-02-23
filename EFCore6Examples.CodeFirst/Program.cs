@@ -71,6 +71,8 @@ using (var _context = new AppDbContext())
     _context.Products.Add(new Product { Name = "Tırışkadan İşler", Price = 65, Stock = 32, Barcode = "12451213254" });
     _context.Products.Add(new Product { Name = "Biz", Price = 44, Stock = 21, Barcode = "368132423432" });
     //These records are now on Tracker. They didn't save to DB and they are in the status "Added."
+    _context.SaveChanges();
+
 
     //Add CreatedDate to all tracked records when the record status is "Added". 
     //_context.ChangeTracker.Entries().ToList().ForEach(e =>
@@ -82,7 +84,6 @@ using (var _context = new AppDbContext())
     //    }
     //});
 
-    _context.SaveChanges();
 
     //var products = await _context.Products.AsNoTracking().ToListAsync();
 
