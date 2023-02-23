@@ -13,5 +13,6 @@ namespace EFCore6Examples.CodeFirst.DAL
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Barcode { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }
