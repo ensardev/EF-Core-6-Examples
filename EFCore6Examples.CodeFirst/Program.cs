@@ -67,11 +67,11 @@ using (var _context = new AppDbContext())
     #endregion
 
     #region ChangeTracker For Products
-    _context.Products.Add(new Product { Name = "Şifrepunk", Price = 77, Stock = 121, Barcode = "822368112451" });
-    _context.Products.Add(new Product { Name = "Tırışkadan İşler", Price = 65, Stock = 32, Barcode = "12451213254" });
-    _context.Products.Add(new Product { Name = "Biz", Price = 44, Stock = 21, Barcode = "368132423432" });
-    //These records are now on Tracker. They didn't save to DB and they are in the status "Added."
-    _context.SaveChanges();
+    //_context.Products.Add(new Product { Name = "Şifrepunk", Price = 77, Stock = 121, Barcode = "822368112451" });
+    //_context.Products.Add(new Product { Name = "Tırışkadan İşler", Price = 65, Stock = 32, Barcode = "12451213254" });
+    //_context.Products.Add(new Product { Name = "Biz", Price = 44, Stock = 21, Barcode = "368132423432" });
+    ////These records are now on Tracker. They didn't save to DB and they are in the status "Added."
+    //_context.SaveChanges();
 
 
     //Add CreatedDate to all tracked records when the record status is "Added". 
@@ -94,5 +94,7 @@ using (var _context = new AppDbContext())
     //    Console.WriteLine($"Ürün : {p.Name} - Fiyat : {p.Price} - Stok : {p.Stock} - State : {state}");
     //});
     #endregion
+
+
 
 }
