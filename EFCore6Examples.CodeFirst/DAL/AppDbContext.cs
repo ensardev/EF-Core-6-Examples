@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace EFCore6Examples.CodeFirst.DAL
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +21,10 @@ namespace EFCore6Examples.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ////Example for Relationships with FluentAPI  
+            //modelBuilder.Entity<Category>().HasMany<Product>().WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
+
+
             base.OnModelCreating(modelBuilder);
         }
 

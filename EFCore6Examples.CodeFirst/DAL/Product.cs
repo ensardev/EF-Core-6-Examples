@@ -13,5 +13,10 @@ namespace EFCore6Examples.CodeFirst.DAL
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Barcode { get; set; }
+        public int CategoryId { get; set; }
+
+        //Navigation property
+        public Category Category { get; set; }
+
     }
 }
