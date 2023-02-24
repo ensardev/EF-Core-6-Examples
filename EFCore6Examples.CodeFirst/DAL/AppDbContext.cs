@@ -23,7 +23,7 @@ namespace EFCore6Examples.CodeFirst.DAL
         {
             ////Example for Relationships with FluentAPI  
             //modelBuilder.Entity<Category>().HasMany<Product>().WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
-
+            //modelBuilder.Entity<Product>().HasOne<ProductFeature>().WithOne(x => x.Product).HasForeignKey<ProductFeature>(x => x.ProductId);
 
             base.OnModelCreating(modelBuilder);
         }
