@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore6Examples.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230224132247_Initial")]
+    [Migration("20230224180635_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,27 +24,7 @@ namespace EFCore6Examples.CodeFirst.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Teacher", b =>
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,37 +38,55 @@ namespace EFCore6Examples.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
                 {
-                    b.Property<int>("StudentsId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TeachersId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentsId", "TeachersId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("TeachersId");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.ToTable("StudentTeacher");
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
                 {
-                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
+                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("TeachersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

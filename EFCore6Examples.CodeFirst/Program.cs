@@ -95,6 +95,23 @@ using (var _context = new AppDbContext())
     //});
     #endregion
 
+    #region One-to-Many Add Data Example
 
+    //var category = new Category() { Name = "Kitap" };
+    //var product = new Product() { Name = "Dava", Price = 22, Stock = 21, Barcode = "01237688723", Category = category };
+
+    //category.Products.Add(new Product() { Name = "Biz", Price = 64, Stock = 9, Barcode = "978345465", Category = category });
+
+    //_context.Products.Add(product);
+    //_context.SaveChanges();
+
+
+    var category = _context.Categories.Find(1);
+
+    category.Products.Add(new Product() { Name = "1984", Price = 45, Stock = 14, Barcode = "94652451523" });
+
+    _context.SaveChanges();
+
+    #endregion
 
 }
