@@ -21,7 +21,27 @@ namespace EFCore6Examples.CodeFirst.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Category", b =>
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,97 +55,36 @@ namespace EFCore6Examples.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
+            modelBuilder.Entity("StudentTeacher", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("StudentsId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Barcode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("TeachersId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("StudentsId", "TeachersId");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasIndex("TeachersId");
 
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
+                    b.ToTable("StudentTeacher");
                 });
 
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.ProductFeature", b =>
+            modelBuilder.Entity("StudentTeacher", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("WithCase")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
-                    b.ToTable("ProductFeature");
-                });
-
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
-                {
-                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.ProductFeature", b =>
-                {
-                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Product", "Product")
-                        .WithOne("Feature")
-                        .HasForeignKey("EFCore6Examples.CodeFirst.DAL.ProductFeature", "ProductId")
+                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Teacher", null)
+                        .WithMany()
+                        .HasForeignKey("TeachersId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
-                {
-                    b.Navigation("Feature")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

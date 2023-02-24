@@ -10,8 +10,12 @@ namespace EFCore6Examples.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,7 +27,17 @@ namespace EFCore6Examples.CodeFirst.DAL
         {
             ////Example for Relationships with FluentAPI  
             //modelBuilder.Entity<Category>().HasMany<Product>().WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
+
             //modelBuilder.Entity<Product>().HasOne<ProductFeature>().WithOne(x => x.Product).HasForeignKey<ProductFeature>(x => x.ProductId);
+
+            //modelBuilder.Entity<Student>()
+            //    .HasMany(x => x.Teachers)
+            //    .WithMany(x => x.Students)
+            //    .UsingEntity<Dictionary<string, object>>(
+            //        "StudentTeacher",
+            //        x => x.HasOne<Teacher>().WithMany().HasForeignKey("TeacherId").HasConstraintName("FK_TeacherId"),
+            //        x => x.HasOne<Student>().WithMany().HasForeignKey("StudentId").HasConstraintName("FK_StudentID")
+            //    );
 
             base.OnModelCreating(modelBuilder);
         }
