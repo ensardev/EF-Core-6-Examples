@@ -138,21 +138,28 @@ using (var _context = new AppDbContext())
     #endregion
 
     #region Explicit Loading
-    var category = _context.Categories.First();
-    /*
-     * Some coding
-     */
+    //var category = _context.Categories.First();
+    ///*
+    // * Some coding
+    // */
 
-    //Veriyi başta çekmek yerine ihtiyacımız olduğu zaman çektik.
-    if (category.Name == "Kitap")
-    {
-        _context.Entry(category).Collection(x => x.Products).Load();
+    ////Veriyi başta çekmek yerine ihtiyacımız olduğu zaman çektik.
+    //if (category.Name == "Kitap")
+    //{
+    //    _context.Entry(category).Collection(x => x.Products).Load();
 
-        category.Products.ForEach(x =>
-        {
-            Console.WriteLine($"Ürün : {x.Name} - Fiyat : {x.Price}");
-        });
-    }
+    //    category.Products.ForEach(x =>
+    //    {
+    //        Console.WriteLine($"Ürün : {x.Name} - Fiyat : {x.Price}");
+    //    });
+    //}
+    #endregion
+
+    #region Lazy Loading
+    var category = await _context.Categories.FirstAsync();
+    Console.WriteLine($"Kategori : {category.Name}");
+
+    var products = category.Products;
     #endregion
 
 }

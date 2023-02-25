@@ -16,8 +16,8 @@ namespace EFCore6Examples.CodeFirst.DAL
         public int CategoryId { get; set; }
 
         //Navigation property
-        public Category Category { get; set; }
-        public ProductFeature Feature { get; set; } = new ProductFeature();
+        public virtual Category Category { get; set; }
+        public virtual ProductFeature Feature { get; set; } = new ProductFeature();
 
     }
 }
