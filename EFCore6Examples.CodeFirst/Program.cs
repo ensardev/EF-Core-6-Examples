@@ -2,6 +2,8 @@
 
 using EFCore6Examples.CodeFirst.DAL;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 
 Initializer.Build();
 
@@ -106,12 +108,33 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges();
 
 
-    var category = _context.Categories.Find(1);
+    //var category = _context.Categories.Find(1);
 
-    category.Products.Add(new Product() { Name = "1984", Price = 45, Stock = 14, Barcode = "94652451523" });
+    //category.Products.Add(new Product() { Name = "1984", Price = 45, Stock = 14, Barcode = "94652451523" });
 
-    _context.SaveChanges();
+    //_context.SaveChanges();
 
+    #endregion
+
+    #region Data Add For Related Data Loading
+    //var category = new Category() { Name = "Kitap" };
+
+    //category.Products.Add(new Product() { Name = "Clean Code", Price = 520, Stock = 17, Barcode = "54738232", Feature = new() { Color = "None", WithCase = true } });
+    //category.Products.Add(new Product() { Name = "EF Core 6e", Price = 170, Stock = 54, Barcode = "63982364", Feature = new() { Color = "None", WithCase = false } });
+
+    //await _context.AddAsync(category);
+    //await _context.SaveChangesAsync();
+
+    //Console.WriteLine("Added!");
+    #endregion
+
+    #region Eager Loading
+    var categoryWithProducts = _context.Categories.Include(x => x.Products).ThenInclude(x => x.Feature).First();
+
+    categoryWithProducts.Products.ForEach(x =>
+    {
+        Console.WriteLine($"Kategori : {categoryWithProducts.Name} - Ürün : {x.Name} - Fiyat : {x.Price} - Stok : {x.Stock} - Renk : {x.Feature.Color} - WithCase : {x.Feature.WithCase}");
+    });
     #endregion
 
 }

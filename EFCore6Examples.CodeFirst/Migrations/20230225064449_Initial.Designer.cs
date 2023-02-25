@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore6Examples.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230224180635_Initial")]
+    [Migration("20230225064449_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -73,6 +73,23 @@ namespace EFCore6Examples.CodeFirst.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.ProductFeature", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("WithCase")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductFeatures");
+                });
+
             modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
                 {
                     b.HasOne("EFCore6Examples.CodeFirst.DAL.Category", "Category")
@@ -84,9 +101,26 @@ namespace EFCore6Examples.CodeFirst.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.ProductFeature", b =>
+                {
+                    b.HasOne("EFCore6Examples.CodeFirst.DAL.Product", "Product")
+                        .WithOne("Feature")
+                        .HasForeignKey("EFCore6Examples.CodeFirst.DAL.ProductFeature", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("EFCore6Examples.CodeFirst.DAL.Product", b =>
+                {
+                    b.Navigation("Feature")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
