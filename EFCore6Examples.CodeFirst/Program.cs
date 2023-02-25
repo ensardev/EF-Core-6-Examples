@@ -129,12 +129,30 @@ using (var _context = new AppDbContext())
     #endregion
 
     #region Eager Loading
-    var categoryWithProducts = _context.Categories.Include(x => x.Products).ThenInclude(x => x.Feature).First();
+    //var categoryWithProducts = _context.Categories.Include(x => x.Products).ThenInclude(x => x.Feature).First();
 
-    categoryWithProducts.Products.ForEach(x =>
+    //categoryWithProducts.Products.ForEach(x =>
+    //{
+    //    Console.WriteLine($"Kategori : {categoryWithProducts.Name} - Ürün : {x.Name} - Fiyat : {x.Price} - Stok : {x.Stock} - Renk : {x.Feature.Color} - WithCase : {x.Feature.WithCase}");
+    //});
+    #endregion
+
+    #region Explicit Loading
+    var category = _context.Categories.First();
+    /*
+     * Some coding
+     */
+
+    //Veriyi başta çekmek yerine ihtiyacımız olduğu zaman çektik.
+    if (category.Name == "Kitap")
     {
-        Console.WriteLine($"Kategori : {categoryWithProducts.Name} - Ürün : {x.Name} - Fiyat : {x.Price} - Stok : {x.Stock} - Renk : {x.Feature.Color} - WithCase : {x.Feature.WithCase}");
-    });
+        _context.Entry(category).Collection(x => x.Products).Load();
+
+        category.Products.ForEach(x =>
+        {
+            Console.WriteLine($"Ürün : {x.Name} - Fiyat : {x.Price}");
+        });
+    }
     #endregion
 
 }
